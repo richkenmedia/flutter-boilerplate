@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:boilerplate/features/group/presentation/bloc/cubit/group_cubit.dart';
+import 'package:boilerplate/features/group/data/repositories/group.dart';
+
 import 'package:boilerplate/features/group/presentation/pages/group_search_page.dart';
 
 void main() {
@@ -14,27 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo - Flutter Bloc'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      home: BlocProvider(
+        create: (context) => GroupCubit(FakeGroupRepository()),
+        child: GroupSearchPage(),
       ),
-      body: GroupSearchPage(),
     );
   }
 }

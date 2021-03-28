@@ -27,13 +27,13 @@ class _GroupSearchPageState extends State<GroupSearchPage> {
           },
           builder: (context, state) {
             if (state is GroupInitial) {
-              return Text("Initial Data");
+              return buildInitialInput();
             } else if (state is GroupLoading) {
-              return Text("Data Loading");
+              return buildLoading();
             } else if (state is GroupLoaded) {
-              return Text("Data Loaded");
+              return buildColumnWithData(state.group);
             } else {
-              return Text("Something went wrong");
+              return buildInitialInput();
             }
           },
         ),
@@ -84,7 +84,7 @@ class NameInputField extends StatelessWidget {
         onSubmitted: (value) => submitName(context, value),
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
-          hintText: "Enter a city",
+          hintText: "Enter a name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           suffixIcon: Icon(Icons.search),
         ),
@@ -93,7 +93,8 @@ class NameInputField extends StatelessWidget {
   }
 
   void submitName(BuildContext context, String groupName) {
-    final groupCubit = context.bloc<GroupCubit>();
+    print("I am here");
+    final groupCubit = context.read<GroupCubit>();
     groupCubit.getGroup(groupName);
   }
 }
